@@ -26,6 +26,7 @@
       with_items:
         - "deploy"
         - "docker-images"
+        - "util"
 
     - name: Copy restart script
       copy:

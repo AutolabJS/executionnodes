@@ -2,3 +2,4 @@
 .vagrant
 docker-images/*.tar
 ubuntu-xenial-16.04-cloudimg-console.log
+util/node_modules/

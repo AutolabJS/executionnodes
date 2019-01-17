@@ -6,4 +6,9 @@
     - debug:
         msg: "Creating SSL Certificates"
 
+- hosts: machines
+  tasks:
+    - name: Install node packages mentioned in package.json for util
+      command: "npm install --prefix {{ install_dir }}/util"
+
 - import_playbook: keys.yml

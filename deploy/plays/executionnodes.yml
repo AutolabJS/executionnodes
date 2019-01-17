@@ -81,6 +81,7 @@
           - "{{ install_dir }}/deploy/configs/util:/etc/util"
           - "{{ install_dir }}/log/execution_nodes/{{ inventory_hostname }}:/log"
         env:
+          LOGGERCONFIG: "/etc/util/logger.json"
           GITLAB_IP: "{{ gitlab_hostname }}"
           ENCONFIG: "/etc/execution_node/conf.json"
           ENSCORES: "/etc/execution_node/scores.json"
