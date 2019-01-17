@@ -9,16 +9,16 @@ server1
 # comment out the unnecessary ones and limit the installation to few
 # execution nodes.
 [executionnodes]
-en1 en_port=8091
-en2 en_port=8092
-en3 en_port=8093
-en4 en_port=8094
-en5 en_port=8095
-en6 en_port=8096
-en7 en_port=8097
-en8 en_port=8098
-en9 en_port=8099
-en10 en_port=8100
+enode1 en_port=8091
+enode2 en_port=8092
+enode3 en_port=8093
+enode4 en_port=8094
+enode5 en_port=8095
+enode6 en_port=8096
+enode7 en_port=8097
+enode8 en_port=8098
+enode9 en_port=8099
+enode10 en_port=8100
 # -------------
 
 # The group variables sections follow
