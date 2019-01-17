@@ -40,12 +40,9 @@ docker_images_location=/path/to/docker/images
 [executionnodes:vars]
 #remember to change host name to proper DNS name or IP address
 ansible_host=localhost
-ms_hostname="{{ ansible_host }}"
 lb_hostname="{{ ansible_host }}"
-db_hostname="{{ ansible_host }}"
 gitlab_hostname="{{ ansible_host }}"
 
-ms_port=9000
 lb_port=8081
 gitlab_port=80  #Don't change this port
 #remember to change the passwords to a secure password

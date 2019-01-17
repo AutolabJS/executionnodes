@@ -37,7 +37,7 @@
         url: https://{{ gitlab_hostname }}/api/v3/session
         status_code: 201
         method: POST
-        body: "login=root&password={{ gitlab_password }}"
+        body: "login={{ gitlab_username }}&password={{ gitlab_password }}"
         validate_certs: no
         return_content: yes
       register: session_json

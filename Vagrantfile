@@ -12,15 +12,12 @@ Vagrant.configure("2") do |config|
   # VM specific configs
   config.vm.provider "virtualbox" do |v|
     v.gui = false
-    v.name = "AutolabJS-ENodes"
+    v.name = "AutolabJS-Enodes"
     v.memory = 4096
     v.cpus = 2
   end
 
   config.vm.provision "shell", inline: <<-SHELL
-  # change the default port of SSH server
-  sudo sed -i 's/^Port 22$/Port 2222/' /etc/ssh/sshd_config
-  sudo sudo service ssh restart
   echo "cd /home/vagrant/autolabjs" >>  /home/ubuntu/.bashrc
   SHELL
 
