@@ -1,0 +1,18 @@
+- hosts: machines
+  become: yes
+  tasks:
+    - name: Install crontab on all the machines running AutolabJS components
+      cron:
+        name: "en-restart"
+        job: "bash /opt/autolabjs/deploy/en-restart.sh"
+        state: present
+        minute: "*"
+        hour: "*"
+        day: "*"
+        weekday: "*"
+        month: "*"
+        user: root
+        cron_file: "autolabjs-en"
+
+    - name: Set firewall policies
+      import_tasks: tasks/ufwset.yml

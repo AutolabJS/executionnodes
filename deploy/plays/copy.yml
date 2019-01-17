@@ -1,0 +1,44 @@
+- hosts: machines
+  tasks:
+    - name: Create the installation directory
+      file:
+        path: "{{ install_dir }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        recurse: yes
+      become: yes
+
+    - name: Create the subdirectories under installation directory
+      file:
+        path: "{{ install_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        mode: 0755
+        recurse: yes
+      with_items:
+        - "tmp"
+
+    - name: Copy files to remaining subdirectories of installation directory
+      copy:
+        src: "../../{{ item }}/"
+        dest: "{{ install_dir }}/{{ item }}/"
+        mode: 0755
+      with_items:
+        - "deploy"
+        - "docker-images"
+
+- hosts: executionnodes
+  tasks:
+    - name: Creating log directories for execution nodes
+      file:
+        path: "{{ install_dir }}/log/execution_nodes/{{ inventory_hostname }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        mode: 0755
+        recurse: yes
+
+    - name: Copying files to directories of execution nodes
+      copy:
+        src: "../../execution_nodes/"
+        dest: "{{ install_dir }}/execution_nodes/{{ inventory_hostname }}"
+        mode: 0755

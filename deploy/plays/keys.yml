@@ -1,0 +1,57 @@
+- hosts: machines
+  tasks:
+    - name: Create the required directories
+      file:
+        path: "{{ install_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        mode: 0755
+      with_items:
+        - "deploy/RootCA/certs"
+        - "deploy/keys/execution_nodes"
+        - "deploy/keys/gitlab/execution_nodes"
+
+    - name: Create a self signed root certificate
+      # Create a random noise of 8192 bytes
+      command: "openssl rand -out {{ install_dir }}/deploy/RootCA/randRootCA 8192"
+      # Generate a private RSA key
+    - command: "openssl genrsa \
+                  -passout pass:{{ password }} \
+                  -out {{ install_dir }}/deploy/RootCA/rootca_key.pem \
+                  -aes256 \
+                  2048 \
+                  -rand {{ install_dir }}/deploy/RootCA/randRootCA"
+    # Remove passphrase from key
+    - command: "openssl rsa \
+                  -in {{ install_dir }}/deploy/RootCA/rootca_key.pem \
+                  -passin pass:{{ password }} \
+                  -out {{ install_dir }}/deploy/RootCA/rootca_key.pem"
+
+    #Generate Self Signed root Certificate
+    - command: "openssl req -new \
+                  -passout pass:{{ password }} \
+                  -x509 \
+                  -days 365 \
+                  -key {{ install_dir }}/deploy/RootCA/rootca_key.pem \
+                  -out {{ install_dir }}/deploy/RootCA/rootca_cert.pem \
+                  -subj '/C={{ country }}\
+                    /ST={{ state }}\
+                    /L={{ locality }}\
+                    /O={{ organization }}\
+                    /OU={{ organizational_unit }}\
+                    /CN={{ app_name }}\
+                    /emailAddress={{ email }}'"
+
+    - name: Create additional files for key generation
+      file:
+        path: "{{ install_dir }}/deploy/RootCA/certindex.txt"
+        state: touch
+
+    - copy:
+        content: "1000"
+        dest: "{{ install_dir }}/deploy/RootCA/serial"
+        force: True
+
+    - file:
+        path: "{{ install_dir }}/deploy/RootCA/randRootCA"
+        state: absent

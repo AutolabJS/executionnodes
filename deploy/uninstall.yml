@@ -1,0 +1,36 @@
+- hosts: executionnodes
+  become: yes
+  tasks:
+    - name: Stop and remove execution_node container
+      docker_container:
+        name: "execution-node-{{ ansible_host }}-{{ en_port }}"
+        state: absent
+      ignore_errors: yes
+
+- hosts: machines
+  become: yes
+  tasks:
+    - name: Remove autolab directory completely
+      file: "dest={{ install_dir }} state=absent"
+      ignore_errors: yes
+
+    - name: Remove all images
+      docker_image:
+        name: "{{ item }}"
+        state: absent
+      ignore_errors: yes
+      with_items:
+      - "autolabjs/executionnode:0.5.0"
+      - "execution_node"
+
+    - name: Remove firewall policies
+      import_tasks: plays/tasks/ufwreset.yml
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: Remove crontab from all the machines running AutolabJS components
+      cron:
+        name: "en-restart"
+        cron_file: "autolabjs-en"
+        state: absent
