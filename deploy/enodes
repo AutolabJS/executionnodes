@@ -58,6 +58,9 @@ locality=Goa
 load_docker_images=no
 docker_images_location=/path/to/docker/images
 
+# Max log file size limit
+max_log_size=5242880
+
 [machines:vars]
 #no exclusive variables for machines group
 # -------------
