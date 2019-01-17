@@ -1,0 +1,38 @@
+---
+engines:
+  shellcheck:
+    enabled: true
+  checkstyle:
+    enabled: true
+    channel: "beta"
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+      - javascript
+      - python
+      - php
+  eslint:
+    enabled: true
+    config:
+      config: .eslintrc
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.java"
+  - "**.css"
+  - "**.inc"
+  - "**.js"
+  - "**.jsx"
+  - "**.module"
+  - "**.sh"
+exclude_paths:
+- "**.md"
+- "**.txt"
+- "**.json"
+- deploy/ansible_plugins/human_log.py
+- deploy/plays/helper_scripts/wait-for-it.sh
