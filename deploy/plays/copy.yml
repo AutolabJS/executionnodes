@@ -27,6 +27,12 @@
         - "deploy"
         - "docker-images"
 
+    - name: Copy restart script
+      copy:
+        src: "../../deploy/plays/helper_scripts/en-restart.sh"
+        dest: "{{ install_dir }}/deploy/en-restart.sh"
+        mode: 0755
+
 - hosts: executionnodes
   tasks:
     - name: Creating log directories for execution nodes

@@ -28,24 +28,17 @@ ansible_connection=local
 ansible_python_interpreter=/usr/bin/python2
 install_dir=/opt/autolabjs
 
-# Development variables
-# The path should not have a trailing slash
-load_docker_images=no
-docker_images_location=/path/to/docker/images
-
-[machines:vars]
-#no exclusive variables for machines group
-# -------------
-
-[executionnodes:vars]
-#remember to change host name to proper DNS name or IP address
+# Remember to change host name to proper DNS name or IP address
+# of the server on which the execution nodes are being installed.
 ansible_host=localhost
+
+# The hostname and port settings given below should match with
+# settings of the main installation of AutolabJS
+# (copy these settings from single_machine file of main installation.)
 lb_hostname="{{ ansible_host }}"
 gitlab_hostname="{{ ansible_host }}"
-
 lb_port=8081
-gitlab_port=80  #Don't change this port
-#remember to change the passwords to a secure password
+gitlab_port=80
 gitlab_username=root
 gitlab_password=12345678
 
@@ -59,3 +52,16 @@ organizational_unit=CSIS
 country=IN
 state=Goa
 locality=Goa
+
+# Development variables
+# The path should not have a trailing slash
+load_docker_images=no
+docker_images_location=/path/to/docker/images
+
+[machines:vars]
+#no exclusive variables for machines group
+# -------------
+
+[executionnodes:vars]
+#no exclusive variables for executionnodes group
+# -------------
