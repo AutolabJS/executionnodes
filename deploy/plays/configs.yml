@@ -19,3 +19,18 @@
         src: templates/execution_node/scores.json.j2
         dest: "../configs/execution_nodes/{{ inventory_hostname }}/scores.json"
         mode: '0600'
+
+- hosts: all
+  tasks:
+    #load balancer configs
+    - name: Create config directory of util
+      file:
+        path: "../configs/util"
+        mode: '0600'
+        state: directory
+
+    - name: Create config of util from template file
+      template:
+        src: templates/util/logger.json.j2
+        dest: "../configs/util/logger.json"
+        mode: '0600'

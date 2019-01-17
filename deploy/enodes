@@ -9,16 +9,16 @@ server1
 # comment out the unnecessary ones and limit the installation to few
 # execution nodes.
 [executionnodes]
-en1 en_port=8091
-en2 en_port=8092
-en3 en_port=8093
-en4 en_port=8094
-en5 en_port=8095
-en6 en_port=8096
-en7 en_port=8097
-en8 en_port=8098
-en9 en_port=8099
-en10 en_port=8100
+enode1 en_port=8091
+enode2 en_port=8092
+enode3 en_port=8093
+enode4 en_port=8094
+enode5 en_port=8095
+enode6 en_port=8096
+enode7 en_port=8097
+enode8 en_port=8098
+enode9 en_port=8099
+enode10 en_port=8100
 # -------------
 
 # The group variables sections follow
@@ -28,27 +28,17 @@ ansible_connection=local
 ansible_python_interpreter=/usr/bin/python2
 install_dir=/opt/autolabjs
 
-# Development variables
-# The path should not have a trailing slash
-load_docker_images=no
-docker_images_location=/path/to/docker/images
-
-[machines:vars]
-#no exclusive variables for machines group
-# -------------
-
-[executionnodes:vars]
-#remember to change host name to proper DNS name or IP address
+# Remember to change host name to proper DNS name or IP address
+# of the server on which the execution nodes are being installed.
 ansible_host=localhost
-ms_hostname="{{ ansible_host }}"
-lb_hostname="{{ ansible_host }}"
-db_hostname="{{ ansible_host }}"
-gitlab_hostname="{{ ansible_host }}"
 
-ms_port=9000
+# The hostname and port settings given below should match with
+# settings of the main installation of AutolabJS
+# (copy these settings from single_machine file of main installation.)
+lb_hostname="{{ ansible_host }}"
+gitlab_hostname="{{ ansible_host }}"
 lb_port=8081
-gitlab_port=80  #Don't change this port
-#remember to change the passwords to a secure password
+gitlab_port=80
 gitlab_username=root
 gitlab_password=12345678
 
@@ -62,3 +52,19 @@ organizational_unit=CSIS
 country=IN
 state=Goa
 locality=Goa
+
+# Development variables
+# The path should not have a trailing slash
+load_docker_images=no
+docker_images_location=/path/to/docker/images
+
+# Max log file size limit
+max_log_size=5242880
+
+[machines:vars]
+#no exclusive variables for machines group
+# -------------
+
+[executionnodes:vars]
+#no exclusive variables for executionnodes group
+# -------------
